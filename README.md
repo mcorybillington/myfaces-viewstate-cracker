@@ -2,7 +2,7 @@
 Script to crack encrypted Apache MyFaces viewstate objects and retrieve the key. 
 
 Usage:
-```bash
+```
 usage: viewstate-cracker.py [-h] [-q [QUEUE_SIZE]] -w WORDLIST (-f VIEWSTATE_FILE | -V VIEWSTATE)
 
 Multithreaded, queued viewstate encryption key cracker by M. Cory Billington.
@@ -19,7 +19,7 @@ optional arguments:
                         Viewstate as a base64 encoded string.
 ```
 Example usage:
-```bash
+```
 $ python3 decrypt_viewstate.py --wordlist wordlist.txt --viewstate-file arkham-viewstate.txt 
 [*] SHA256 of viewstate/HMAC:  ac8ccc9d3d76e77271ffbdc72e0e57485573423675641ac50d49d4e00d869406
 [*] SHA256 of viewstate:       fcd63919c021962f94cfd1cca36c0f787b56aaab3547681cfa67b7ad217ce8a3
