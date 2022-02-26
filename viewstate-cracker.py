@@ -12,20 +12,22 @@ from argparse import ArgumentParser
 
 
 class ViewStateCracker:
-    def __init__(self, queue_size, viewstate, wordlist) -> None:
+    def __init__(self, queue_size, algorithm, viewstate, wordlist) -> None:
         self.queue_size = queue_size
         self.queue = None
+        self.algorithm = algorithm
         self.viewstate = viewstate
         self.wordlist = wordlist
         self.orig_enc_data = None
         self.orig_hmac = None
 
     def slice_viewstate(self):
-        self.orig_hmac = self.viewstate[-20:]
-        self.orig_enc_data = self.viewstate[:-20]
+        offset = len(self.algorithm().digest())
+        self.orig_hmac = self.viewstate[-offset:]
+        self.orig_enc_data = self.viewstate[:-offset]
 
     def check_hmac(self, key):
-        new_hmac = hmac.new(key, self.orig_enc_data, sha1)
+        new_hmac = hmac.new(key, self.orig_enc_data, self.algorithm)
         if hmac.compare_digest(new_hmac.digest(), self.orig_hmac):
             print(f"[+] Key found: {key.decode()}")
             os.kill(os.getpid(), signal.SIGINT)
@@ -44,7 +46,10 @@ class ViewStateCracker:
     def startup_data(self):
         print(f"{'[*] SHA256 of viewstate/HMAC:' : <30} {sha256(self.viewstate).hexdigest()}")
         print(f"{'[*] SHA256 of viewstate:' : <30} {sha256(self.orig_enc_data).hexdigest()}")
-        print(f"{'[*] Original HMAC SHA1 digest:' : <30} {hexlify(self.orig_hmac).decode()}")
+        if self.algorithm == sha256:
+            print(f"{'[*] Original HMAC SHA256 digest:' : <30} {hexlify(self.orig_hmac).decode()}")
+        else:
+            print(f"{'[*] Original HMAC SHA1 digest:' : <30} {hexlify(self.orig_hmac).decode()}")
         print("[*] Running...\n")
 
     def run(self):
@@ -67,9 +72,10 @@ class ViewStateCracker:
 
 
 def parse_args():
-    parser = ArgumentParser(description="Multithreaded, queued viewstate encryption key cracker by M. Cory Billington.")
+    parser = ArgumentParser(description="Viewstate encryption key cracker by M. Cory Billington.")
     parser.add_argument("-q", "--queue-size", nargs='?', default=200, type=int, help="Size of queue. read the docs. idk...")
     parser.add_argument("-w", "--wordlist", required=True, help="Path to wordlist.")
+    parser.add_argument("-a", "--algorithm", required=False, default='sha1', help="HMAC algorithm (sha1 or sha256)")
     viewstate_group = parser.add_mutually_exclusive_group(required=True)
     viewstate_group.add_argument("-f", "--viewstate-file", help="Path to base64 encoded viewstate.")
     viewstate_group.add_argument("-V", "--viewstate", help="Viewstate as a base64 encoded string.")
@@ -87,7 +93,13 @@ def main():
             unquoted = parse.unquote_plus(f.read())
             viewstate_object = b64decode(unquoted)
 
+    if args.algorithm == 'sha256':
+        algorithm = sha256
+    else:
+        algorithm = sha1
+
     viewstate_cracker = ViewStateCracker(queue_size=args.queue_size,
+                                         algorithm=algorithm,
                                          viewstate=viewstate_object,
                                          wordlist=args.wordlist)
     viewstate_cracker.run()
