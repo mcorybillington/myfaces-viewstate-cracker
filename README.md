@@ -1,7 +1,9 @@
-# myfaces-viewstate-cracker
-Script to crack encrypted Apache MyFaces viewstate object HMACs and retrieve the key.
+# Apache MyFaces Viewstate Decryption Tools
+Scripts to crack encrypted Apache MyFaces viewstate objects and HMACs.
 
-This is obviously targeted towards and someone using the same pretty weak key for `o.a.m.MAC_SECRET` and `o.a.m.SECRET`. If it cracks and the same key is in use for both, you can use the script in the writeup listed under [credit](#credit) to encrypt your own payload.
+This is obviously targeted towards and someone using the same pretty weak key for `o.a.m.MAC_SECRET` and `o.a.m.SECRET`. Examples [here](https://cwiki.apache.org/confluence/display/MYFACES2/Secure+Your+Application) and in the writeup in [credit](#credit).
+
+If it cracks and the same key is used for both, or if you crack both, you can use the script in the writeup listed under [credit](#credit) to encrypt your own payload.
 
 Usage for HMAC cracker:
 ```
