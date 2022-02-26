@@ -102,7 +102,8 @@ def main():
     viewstate_cracker = ViewStateCracker(queue_size=args.queue_size,
                                          algorithm=algorithm,
                                          viewstate=viewstate_object,
-                                         wordlist=args.wordlist)
+                                         wordlist=args.wordlist,
+                                         )
     viewstate_cracker.run()
 
 
