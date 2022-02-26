@@ -23,7 +23,7 @@ optional arguments:
                         Viewstate as a base64 encoded string.
 ```
 Usage for viewstate decrypter:
-```bash
+```
 usage: viewstate-decrypter.py [-h] [-q [QUEUE_SIZE]] -w WORDLIST [-a ALGORITHM] [-o OUTFILE] (-f VIEWSTATE_FILE | -V VIEWSTATE)
 
 Viewstate encryption key cracker by M. Cory Billington.
