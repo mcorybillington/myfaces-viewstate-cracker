@@ -3,9 +3,9 @@ Script to crack encrypted Apache MyFaces viewstate objects and retrieve the key.
 
 Usage:
 ```
-usage: viewstate-cracker.py [-h] [-q [QUEUE_SIZE]] -w WORDLIST (-f VIEWSTATE_FILE | -V VIEWSTATE)
+usage: decrypt_viewstate.py [-h] [-q [QUEUE_SIZE]] -w WORDLIST [-a ALGORITHM] (-f VIEWSTATE_FILE | -V VIEWSTATE)
 
-Multithreaded, queued viewstate encryption key cracker by M. Cory Billington.
+Viewstate encryption key cracker by M. Cory Billington.
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -13,6 +13,8 @@ optional arguments:
                         Size of queue. read the docs. idk...
   -w WORDLIST, --wordlist WORDLIST
                         Path to wordlist.
+  -a ALGORITHM, --algorithm ALGORITHM
+                        HMAC algorithm (sha1 or sha256)
   -f VIEWSTATE_FILE, --viewstate-file VIEWSTATE_FILE
                         Path to base64 encoded viewstate.
   -V VIEWSTATE, --viewstate VIEWSTATE
