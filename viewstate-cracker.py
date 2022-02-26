@@ -67,7 +67,6 @@ class ViewStateCracker:
                 self.queue.put(key.strip())
             self.queue.join()
         except KeyboardInterrupt:
-            print("[!] Detected keyboard interrupt. Exiting...")
             exit(1)
         print("[-] Key not found")
 

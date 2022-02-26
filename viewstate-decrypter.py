@@ -42,9 +42,11 @@ class ViewStateCracker:
             if self.key_length_error % 100 == 0:
                 print("Detecting a lot of keys that are not 8 bytes long")
             return
+
         cipher = des(key, ECB, IV=None, pad=None, padmode=PAD_PKCS5)
         decrypted = cipher.decrypt(self.enc_data)
-        if decrypted[:4] in [b'\xca\xfe\xba\xbe', b'\xac\xed\x00\x05']:
+
+        if decrypted[:4] in (b'\xca\xfe\xba\xbe', b'\xac\xed\x00\x05'):
             print(f"[+] Key found: {key.decode()}")
             if self.outfile:
                 with open(self.outfile, 'wb') as f:
@@ -89,7 +91,6 @@ class ViewStateCracker:
                 self.queue.put(key.strip())
             self.queue.join()
         except KeyboardInterrupt:
-            print("[!] Detected keyboard interrupt. Exiting...")
             exit(1)
         print("[-] Key not found")
 
