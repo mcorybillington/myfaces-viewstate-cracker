@@ -41,5 +41,5 @@ $ python3 decrypt_viewstate.py --wordlist xato-net-10-million-passwords-1000000.
 [+] Key found: JsF9876-
 ```
 ### Credit
-I really just worked backwards from this:
+I really just worked backwards from this [Hack The Box](https://www.hackthebox.com/) writeup from @0xRick:
 - https://0xrick.github.io/hack-the-box/arkham/
