@@ -1,9 +1,11 @@
 # myfaces-viewstate-cracker
-Script to crack encrypted Apache MyFaces viewstate objects and retrieve the key. 
+Script to crack encrypted Apache MyFaces viewstate object HMACs and retrieve the key.
 
-Usage:
+This is obviously targeted towards and someone using the same pretty weak key for `o.a.m.MAC_SECRET` and `o.a.m.SECRET`. If it cracks and the same key is in use for both, you can use the script in the writeup listed under [credit](#credit) to encrypt your own payload.
+
+Usage for HMAC cracker:
 ```
-usage: decrypt_viewstate.py [-h] [-q [QUEUE_SIZE]] -w WORDLIST [-a ALGORITHM] (-f VIEWSTATE_FILE | -V VIEWSTATE)
+usage: viewstate-cracker.py [-h] [-q [QUEUE_SIZE]] -w WORDLIST [-a ALGORITHM] (-f VIEWSTATE_FILE | -V VIEWSTATE)
 
 Viewstate encryption key cracker by M. Cory Billington.
 
@@ -20,7 +22,28 @@ optional arguments:
   -V VIEWSTATE, --viewstate VIEWSTATE
                         Viewstate as a base64 encoded string.
 ```
-Example usage:
+Usage for viewstate decrypter:
+```bash
+usage: viewstate-decrypter.py [-h] [-q [QUEUE_SIZE]] -w WORDLIST [-a ALGORITHM] [-o OUTFILE] (-f VIEWSTATE_FILE | -V VIEWSTATE)
+
+Viewstate encryption key cracker by M. Cory Billington.
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -q [QUEUE_SIZE], --queue-size [QUEUE_SIZE]
+                        Size of queue. read the docs. idk...
+  -w WORDLIST, --wordlist WORDLIST
+                        Path to wordlist.
+  -a ALGORITHM, --algorithm ALGORITHM
+                        HMAC algorithm (sha1 or sha256)
+  -o OUTFILE, --outfile OUTFILE
+                        File to write decrypted viewstate object
+  -f VIEWSTATE_FILE, --viewstate-file VIEWSTATE_FILE
+                        Path to base64 encoded viewstate.
+  -V VIEWSTATE, --viewstate VIEWSTATE
+                        Viewstate as a base64 encoded string.
+```
+Example usage for HMAC cracker:
 ```
 $ python3 decrypt_viewstate.py --wordlist wordlist.txt --viewstate-file arkham-viewstate.txt 
 [*] SHA256 of viewstate/HMAC:  ac8ccc9d3d76e77271ffbdc72e0e57485573423675641ac50d49d4e00d869406
