@@ -47,7 +47,7 @@ optional arguments:
 ```
 Example usage for HMAC cracker:
 ```
-$ python3 decrypt_viewstate.py --wordlist wordlist.txt --viewstate-file arkham-viewstate.txt 
+$ python3 viewstate-cracker.py --wordlist wordlist.txt --viewstate-file arkham-viewstate.txt 
 [*] SHA256 of viewstate/HMAC:  ac8ccc9d3d76e77271ffbdc72e0e57485573423675641ac50d49d4e00d869406
 [*] SHA256 of viewstate:       fcd63919c021962f94cfd1cca36c0f787b56aaab3547681cfa67b7ad217ce8a3
 [*] Original HMAC SHA1 digest: 9d15ffad383b3f1329f6118d29037f925afe5f27
